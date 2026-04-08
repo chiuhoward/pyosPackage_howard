@@ -1,3 +1,5 @@
+Day 0 First Edit: Testing by adding this line.
+
 # <img src="https://www.pyopensci.org/images/logo.png" width=100 />  pyOpenSci: Create a Python Package Workshop Repository
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
