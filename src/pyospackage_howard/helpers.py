@@ -1,27 +1,43 @@
 import numpy as np
 
+L1_CORTICAL_PARCELS = 148
+L2_NETWORKS = 50
+L3_NETWORKS = 17
+
 def generate_positive_weights(n_subjects=5):
     """
     Generates dummy weight matrices with values between 0 and 1.
     
     Returns:
-        weights_1to2: Array of shape (n_subjects, 148, 50)
-        weights_2to3: Array of shape (n_subjects, 50, 17)
+        weights_L1_to_L2: Array of shape (n_subjects, L1_CORTICAL_PARCELS, L2_NETWORKS)
+        weights_L2_to_L3: Array of shape (n_subjects, L2_NETWORKS, L3_NETWORKS)
     """
     # np.random.rand creates a uniform distribution between 0 and 1
-    weights_1to2 = np.random.rand(n_subjects, 148, 50)
-    weights_2to3 = np.random.rand(n_subjects, 50, 17)
+    weights_L1_to_L2 = np.random.rand(n_subjects, L1_CORTICAL_PARCELS, L2_NETWORKS)
+    weights_L2_to_L3 = np.random.rand(n_subjects, L2_NETWORKS, L3_NETWORKS)
     
     print(f"Generated positive weights for {n_subjects} subjects.")
-    return weights_1to2, weights_2to3
+    return weights_L1_to_L2, weights_L2_to_L3
 
-def compute_l1_to_l3_weights(weights_1to2, weights_2to3):
+def compute_L1_to_L3_weights(weights_L1_to_L2, weights_L2_to_L3):
     """
     Compute L1→L3 weights using vectorized matrix multiplication.
     """
+    if weights_L1_to_L2.shape[1:] != (L1_CORTICAL_PARCELS, L2_NETWORKS):
+        raise ValueError(
+            f"weights_L1_to_L2 must have shape (n, {L1_CORTICAL_PARCELS}, {L2_NETWORKS}), "
+            f"got {weights_L1_to_L2.shape}"
+        )
+    
+    if weights_L2_to_L3.shape[1:] != (L2_NETWORKS, L3_NETWORKS):
+        raise ValueError(
+            f"weights_L2_to_L3 must have shape (n, {L2_NETWORKS}, {L3_NETWORKS}), "
+            f"got {weights_L2_to_L3.shape}"
+        )
+
     # 1. Batch matrix multiply: (n, 148, 50) @ (n, 50, 17) -> (n, 148, 17)
-    weights_1to3 = weights_1to2 @ weights_2to3
+    weights_L1_to_L3 = weights_L1_to_L2 @ weights_L2_to_L3
     
     # 2. Reshape to flatten the 148x17 matrices for each subject
     # -1 tells NumPy to calculate the size of that dimension automatically
-    return weights_1to3.reshape(weights_1to3.shape[0], -1)
+    return weights_L1_to_L3.reshape(weights_L1_to_L3.shape[0], -1)
