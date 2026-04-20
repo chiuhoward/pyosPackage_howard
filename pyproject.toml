@@ -30,20 +30,16 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
 ]
-# TODO: add keywords
-keywords = []
 
-dependencies = [
-    "numpy",
-]
+keywords = []
+dependencies = []
+
 
 [project.urls]
 Homepage = "https://github.com/chiuhoward/pyospackage_howard"
 "Source Code" = "https://github.com/chiuhoward/pyospackage_howard"
 "Bug Tracker" = "https://github.com/chiuhoward/pyospackage_howard/issues"
 Documentation = "https://github.com/chiuhoward/pyospackage_howard/blob/main/README.md"
-# Note: update this url when you have published your package to pypi. (or delete it)
-Download = "https://pypi.org/project/pyospackage_howard/#files"
 
 [dependency-groups]
 dev = [
