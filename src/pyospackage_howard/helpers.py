@@ -34,6 +34,15 @@ def compute_L1_to_L3_weights(weights_L1_to_L2, weights_L2_to_L3):
             f"weights_L2_to_L3 must have shape (n, {L2_NETWORKS}, {L3_NETWORKS}), "
             f"got {weights_L2_to_L3.shape}"
         )
+    
+    if weights_L1_to_L2.ndim != 3:
+        raise ValueError(f"weights_L1_to_L2 must be 3D, got {weights_L1_to_L2.ndim}D")
+    
+    if weights_L1_to_L2.shape[0] != weights_L2_to_L3.shape[0]:
+        raise ValueError(
+            f"Subject count mismatch: weights_L1_to_L2 has {weights_L1_to_L2.shape[0]} "
+            f"subjects, weights_L2_to_L3 has {weights_L2_to_L3.shape[0]}"
+        )
 
     # 1. Batch matrix multiply: (n, 148, 50) @ (n, 50, 17) -> (n, 148, 17)
     weights_L1_to_L3 = weights_L1_to_L2 @ weights_L2_to_L3

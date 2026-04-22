@@ -8,6 +8,7 @@ module.
 """
 
 from pyospackage_howard.example import add_numbers
+import pytest
 
 def test_add_numbers():
     """
@@ -19,6 +20,11 @@ def test_add_numbers():
     expected_out = 3
     assert  out == expected_out, f"Expected {expected_out} but got {out}"
 
+@pytest.mark.parametrize("a, b", [
+    (1, 2),
+    (1.5, 2.5),
+    (0, -3.14),
+])
 def test_number_type(a, b):
     """Validate that inputs are numeric."""
     assert isinstance(a, (int, float)), f"First argument must be numeric, got {type(a).__name__}"
